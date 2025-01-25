@@ -1,0 +1,40 @@
+trigger: none
+
+pool: Git_Agent_Pool
+
+stages:
+- stage: buildinstaller
+  displayName:  Build folder Creation
+  jobs:
+  - job: InstallNodejs
+    displayName:  Install Nodejs
+    steps:
+    - task: NodeTool@0
+      inputs:
+        versionSource: 'spec'
+        versionSpec: '16.x'
+  
+    - task: Npm@1
+      displayName: npm install
+      inputs:
+        command: 'install'
+        workingDir: '$(System.DefaultWorkingDirectory)'
+
+
+    - task: Npm@1
+      displayName:  npm build
+      inputs:
+        command: 'custom'
+        workingDir: '$(System.DefaultWorkingDirectory)'
+        customCommand: 'run build'
+    
+    - task: PublishPipelineArtifact@1
+      displayName:  Build Artifact
+      inputs:
+        targetPath: '$(System.DefaultWorkingDirectory)/build'
+        artifact: 'todoui'
+        publishLocation: 'pipeline'
+  
+
+     
+     
