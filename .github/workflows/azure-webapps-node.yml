@@ -5,8 +5,8 @@ on:
 
 env:
   AZURE_WEBAPP_NAME: RBK-app    # Set this to your application's name
-  AZURE_WEBAPP_PACKAGE_PATH: '.build' # Path to the web app package (defaults to repo root)
-  NODE_VERSION: '16.x'           # Node.js version to use (consider upgrading)
+  AZURE_WEBAPP_PACKAGE_PATH: './build' # Path to the web app package (defaults to repo root)
+  NODE_VERSION: '18.x'           # Node.js version to use (consider upgrading)
 
 permissions:
   contents: write
