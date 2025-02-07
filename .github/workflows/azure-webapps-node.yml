@@ -5,7 +5,7 @@ on:
 
 env:
   AZURE_WEBAPP_NAME: RBK-app    # Set this to your application's name
-  AZURE_WEBAPP_PACKAGE_PATH: '.' # Path to the web app package (defaults to repo root)
+  AZURE_WEBAPP_PACKAGE_PATH: '.build' # Path to the web app package (defaults to repo root)
   NODE_VERSION: '16.x'           # Node.js version to use (consider upgrading)
 
 permissions:
@@ -26,14 +26,14 @@ jobs:
 
     - name: Install Dependencies & Build
       run: |
-        npm install
-        npm run build 
+        npm install || { echo "npm install failed!"; exit 1; }
+        npm run build || { echo "npm build failed!"; exit 1; }
 
     - name: Upload Artifact for Deployment
       uses: actions/upload-artifact@v4
       with:
         name: node-app
-        path: .
+        path: ./build
 
   deploy:
     permissions:
